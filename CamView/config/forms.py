@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from tinymce.widgets import TinyMCE
 
-from CamView.core.models import Config, Pessoa
+from CamView.core.models import Config, Pessoa, Camera, Grupo
 from CamView.core.libs.conexaoAD3 import conexaoAD
 
 
@@ -74,18 +74,34 @@ class AdForm(forms.ModelForm):
         return cleaned_data
 
 
-class SetorForm(forms.ModelForm):
+class CameraForm(forms.ModelForm):
 
     class Meta:  # Define os campos vindos do Model
-        #model = Setor
-        fields = ('nome', 'responsavel', 'email')
+        model = Camera
+        fields = ('nome', 'ip', 'usuario', 'senha', 'status')
 
     def __init__(self, request, *args, **kwargs):  # INIT define caracteristicas para os campos de formulário vindos do Model (banco de dados)
-        super(SetorForm, self).__init__(*args, **kwargs)
-        self.fields['nome'].widget = forms.TextInput(attrs={'placeholder': 'Nome do Setor', 'title': 'Nome do Setor'})
+        super(CameraForm, self).__init__(*args, **kwargs)
+        self.fields['nome'].widget = forms.TextInput(attrs={'placeholder': 'Nome da Câmera', 'title': 'O nome que será atribuído à câmera adicionada'})
         self.fields['nome'].label = ""
-        self.fields['email'].widget = forms.TextInput(attrs={'placeholder': 'E-mail', 'title': 'e-mail do setor'})
-        self.fields['email'].label = ""
+        self.fields['ip'].widget = forms.TextInput(attrs={'placeholder': 'IP', 'title': 'Endereço IP da câmera'})
+        self.fields['ip'].label = ""
+        self.fields['usuario'].widget = forms.TextInput(attrs={'placeholder': 'Usuário', 'title': 'Usuário para acessar a câmera'})
+        self.fields['usuario'].label = ""
+        self.fields['senha'].widget = forms.TextInput(attrs={'placeholder': 'Senha', 'title': 'Senha do usuário da câmera'})
+        self.fields['senha'].label = ""
+
+
+class GrupoForm(forms.ModelForm):
+
+    class Meta:  # Define os campos vindos do Model
+        model = Grupo
+        fields = ('nome', 'status')
+
+    def __init__(self, request, *args, **kwargs):  # INIT define caracteristicas para os campos de formulário vindos do Model (banco de dados)
+        super(GrupoForm, self).__init__(*args, **kwargs)
+        self.fields['nome'].widget = forms.TextInput(attrs={'placeholder': 'Nome do Grupo', 'title': 'Nome do Grupo de Câmeras'})
+        self.fields['nome'].label = ""
 
 
 class PessoaForm(forms.ModelForm):

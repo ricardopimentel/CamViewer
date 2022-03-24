@@ -1,13 +1,13 @@
 /* Styles Colors */
 :root{
 	
-	--primary-light: #009688;
-	--primary: #00796b;
-	--primary-middle: #00695c;
-	--primary-dark: #004d40;
-	--accent: #ad7fa8;
-	--accent-dark: #75507b;
-	--accent-light: #c192bc;
+	--primary-light: #607d8b;/*500*/
+	--primary: #455a64;/*700*/
+	--primary-middle: #37474f;/*800*/
+	--primary-dark: #263238;/*900*/
+	--accent: #ad7fa8;/*500*/
+	--accent-dark: #75507b;/*500*/
+	--accent-light: #c192bc;/*500*/
 	
 }
 

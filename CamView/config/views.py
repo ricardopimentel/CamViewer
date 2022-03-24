@@ -4,13 +4,13 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, resolve_url as r
 
-from CamView.config.forms import AdForm, PessoaForm
-from CamView.core.models import Config, Pessoa
+from CamView.config.forms import AdForm, PessoaForm, CameraForm, GrupoForm
+from CamView.core.models import Config, Pessoa, Camera, Grupo
 
 
 def Administracao(request):
     if dict(request.session).get('nomesugestao'):
-        return render(request, 'config/visualizacao.html', {
+        return render(request, 'config/administracao.html', {
             'title': 'Administração',
             'itemselec': 'ADMINISTRAÇÃO',
         })
@@ -117,9 +117,115 @@ def CadastroPessoa(request, id):
         })
     return redirect(r('Login'))
 
+
+def GerenciarCameras(request):
+    cameras = Camera.objects.all()
+    if dict(request.session).get('nomesugestao'):
+        return render(request, 'config/gerenciar_camera.html', {
+            'title': 'Administração',
+            'itemselec': 'ADMINISTRAÇÃO',
+            'cameras': cameras,
+        })
+    return redirect(r('Login'))
+
+
+def CadastroCameras(request, id):
+    if dict(request.session).get('nomesugestao'):
+        editar =False
+
+        if id == 'cadastro': # verifica se é para cadastrar ou alterar
+            form = CameraForm(request)
+        else: # se for para alterar cria um formulário já preenchido
+            editar = True
+            camera = Camera.objects.get(id=id)
+            form = CameraForm(request, initial={'nome': camera.nome, 'ip': camera.ip, 'usuario': camera.usuario, 'senha': camera.senha, 'status': camera.status, })
+
+        if request.method == 'POST':
+            if editar:
+                camera = Camera.objects.get(id=id)
+                form = CameraForm(request, request.POST, instance=camera)
+            else:
+                form = CameraForm(request, request.POST)
+            # Checa se os dados são válidos:
+            if form.is_valid():
+                if editar:
+                    camera.nome = request.POST['nome']
+                    camera.ip = request.POST['ip']
+                    if dict(request.POST).get('status'):
+                        camera.status = True
+                    else:
+                        camera.status = False
+                    camera.usuario = request.POST['usuario']
+                    camera.senha = request.POST['senha']
+                    camera.save()
+                else:
+                    form.save()
+                messages.success(request, "Sucesso!")
+                return redirect(r('GerenciarCameras'))
+        return render(request, 'config/admin_cadastro_camera.html', {
+            'title': 'Administração',
+            'itemselec': 'ADMINISTRAÇÃO',
+            'id': id,
+            'titulo': 'Cadastro de Câmeras',
+            'form': form,
+        })
+    return redirect(r('Login'))
+
+
+def CadastroGrupos(request, id):
+    if dict(request.session).get('nomesugestao'):
+        editar =False
+
+        if id == 'cadastro': # verifica se é para cadastrar ou alterar
+            form = GrupoForm(request)
+        else: # se for para alterar cria um formulário já preenchido
+            editar = True
+            grupo = Grupo.objects.get(id=id)
+            form = GrupoForm(request, initial={'nome': grupo.nome, 'status': grupo.status, })
+
+        if request.method == 'POST':
+            if editar:
+                grupo = Grupo.objects.get(id=id)
+                form = GrupoForm(request, request.POST, instance=grupo)
+            else:
+                form = GrupoForm(request, request.POST)
+            # Checa se os dados são válidos:
+            if form.is_valid():
+                if editar:
+                    grupo.nome = request.POST['nome']
+                    if dict(request.POST).get('status'):
+                        grupo.status = True
+                    else:
+                        grupo.status = False
+                    grupo.save()
+                else:
+                    form.save()
+                messages.success(request, "Sucesso!")
+                return redirect(r('GerenciarGrupos'))
+        return render(request, 'config/admin_cadastro_grupo.html', {
+            'title': 'Administração',
+            'itemselec': 'ADMINISTRAÇÃO',
+            'id': id,
+            'titulo': 'Cadastro de Grupos',
+            'form': form,
+        })
+    return redirect(r('Login'))
+
+
+def GerenciarGrupos(request):
+    grupos = Grupo.objects.all()
+    if dict(request.session).get('nomesugestao'):
+        return render(request, 'config/gerenciar_grupo.html', {
+            'title': 'Administração',
+            'itemselec': 'ADMINISTRAÇÃO',
+            'grupos': grupos,
+        })
+    return redirect(r('Login'))
+
+
 def Visualizar(request):
     if dict(request.session).get('nomesugestao'):
-        return render(request, 'config/visualizacao.html', {
+        return render(request, 'config/administracao.html', {
             'title': 'Administração',
             'itemselec': 'ADMINISTRAÇÃO',
         })
