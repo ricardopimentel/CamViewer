@@ -1,0 +1,18 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+
+.Camview
+.idea
+.env
+*.sqlite3
+*pyc
+staticfiles
+mediafiles
+media
+temp
+.ipynb_checkpoints/
+.vscode
+.python-version
+uploads
+
