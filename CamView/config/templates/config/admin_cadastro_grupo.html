@@ -63,7 +63,7 @@
         <div class="navegation_bar">
             <a href="{% url 'Home' %}">Home</a>
             <a href="{% url 'Administracao' %}">Administração</a>
-            <a href="{% url 'GerenciarGrupos' %}">Gerenciar Grupos</a>
+            <a href="{% url 'GerenciarGrupos' 'vazio' 'vazio'%}">Gerenciar Grupos</a>
             <a id="navegation_bar_selected" href="{% url 'CadastroGrupos' id %}">Cadastro Grupos</a>
         </div>
         <br>

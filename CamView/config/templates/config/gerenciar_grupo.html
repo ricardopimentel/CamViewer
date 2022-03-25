@@ -74,7 +74,7 @@
             <div class="navegation_bar">
                 <a href="{% url 'Home' %}">Home</a>
                 <a href="{% url 'Administracao' %}">Administração</a>
-                <a id="navegation_bar_selected" href="{% url 'GerenciarGrupos' %}">Gerenciar Grupos</a>
+                <a id="navegation_bar_selected" href="{% url 'GerenciarGrupos' 'vazio' 'vazio'%}">Gerenciar Grupos</a>
             </div>
             <table id="minhaTabela">
                 <thead>
@@ -87,13 +87,66 @@
                     {%for grupo in grupos%}
                         <tr>
                             <td id="td-vermelho"><a href="{% url 'CadastroGrupos' grupo.id %}">{{ grupo.nome }}</a></td>
-                            <td><a href="{% url 'CadastroGrupos' grupo.id %}">{{ grupo.id }}</a></td>
+                            <td><a href="{% url 'GerenciarGrupos' 'pessoa' grupo.id %}" title="Vincular câmeras"><div class="sistemas"><img src="{% static 'images/add_pessoa_24_b.png' %}"></div></a> <a href="{% url 'GerenciarGrupos' 'camera' grupo.id %}" title="Vincular câmeras"><div class="sistemas"><img src="{% static 'images/add_camera_24_b.png' %}"></div></a></td>
                         </tr>
                     {%endfor%}
                 </tbody>
             </table>
         </div>
     </div>
+
+    {%if pessoas%}
+        <div class="cartao">
+            <img src="{% static 'images/user.png' %}" alt="" height="70">
+            <h1>Vincular Pessoas</h1>
+            <br>
+
+            <div class="card-progressao-container">
+                <table id="minhaTabela">
+                    <thead>
+                        <tr id="tr-no-shadow">
+                            <th>Nome</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for pessoa in pessoas%}
+                            <tr>
+                                <td id="td-vermelho">
+                                    <input type="checkbox" id="{{dia}}" name="{{dia}}" onClick="cbChanged(this);"/>
+                                    <label for="{{dia}}"><span>{{dia}}</span></label>
+                                    <a href="{% url 'CadastroPessoa' pessoa.id %}">{{ pessoa.nome }}</a>
+                                </td>
+                                <td><a href="{% url 'CadastroPessoa' pessoa.id %}">{{pessoa.usuario}}</a></td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {%endif%}
+
+    {%if cameras%}
+        <div class="cartao">
+            {%for camera in cameras%}
+                <div class=""></div>
+                <p>{{camera}}</p>
+            {%endfor%}
+        </div>
+    {%endif%}
+
+    <script language="JavaScript" >
+		function cbChanged(checkboxElem) {
+			if(!$('#frm input[type="checkbox"]').is(':checked')){
+				trocar('show', 'hide')
+				return false;
+		    }else{
+		    	trocar('hide', 'show')
+		    	return true;
+		    }
+		}
+	</script>
+
     <script>
         $(document).ready(function () {
             $('#minhaTabela').DataTable({

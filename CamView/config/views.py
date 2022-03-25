@@ -212,13 +212,21 @@ def CadastroGrupos(request, id):
     return redirect(r('Login'))
 
 
-def GerenciarGrupos(request):
+def GerenciarGrupos(request, tipo, id):
+    pessoas = False
+    cameras = False
+    if tipo == 'pessoa':
+        pessoas = Pessoa.objects.all()
+    elif tipo == 'camera':
+        cameras = Camera.objects.all()
     grupos = Grupo.objects.all()
     if dict(request.session).get('nomesugestao'):
         return render(request, 'config/gerenciar_grupo.html', {
             'title': 'Administração',
             'itemselec': 'ADMINISTRAÇÃO',
             'grupos': grupos,
+            'pessoas': pessoas,
+            'cameras': cameras,
         })
     return redirect(r('Login'))
 
