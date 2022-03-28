@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, resolve_url as r
 
-from CamView.config.forms import AdForm, PessoaForm, CameraForm, GrupoForm
+from CamView.config.forms import AdForm, PessoaForm, CameraForm, GrupoForm, VincularPessoasGrupoForm
 from CamView.core.models import Config, Pessoa, Camera, Grupo
 
 
@@ -215,8 +215,10 @@ def CadastroGrupos(request, id):
 def GerenciarGrupos(request, tipo, id):
     pessoas = False
     cameras = False
+    formpessoa = False
     if tipo == 'pessoa':
         pessoas = Pessoa.objects.all()
+        formpessoa = VincularPessoasGrupoForm()
     elif tipo == 'camera':
         cameras = Camera.objects.all()
     grupos = Grupo.objects.all()
@@ -227,6 +229,7 @@ def GerenciarGrupos(request, tipo, id):
             'grupos': grupos,
             'pessoas': pessoas,
             'cameras': cameras,
+            'formpessoa': formpessoa,
         })
     return redirect(r('Login'))
 

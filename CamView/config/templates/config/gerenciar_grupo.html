@@ -102,7 +102,7 @@
             <br>
 
             <div class="card-progressao-container">
-                <table id="minhaTabela">
+                <table id="minhaTabela1">
                     <thead>
                         <tr id="tr-no-shadow">
                             <th>Nome</th>
@@ -110,15 +110,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {%for pessoa in pessoas%}
-                            <tr>
-                                <td id="td-vermelho">
-                                    <input type="checkbox" id="{{dia}}" name="{{dia}}" onClick="cbChanged(this);"/>
-                                    <label for="{{dia}}"><span>{{dia}}</span></label>
-                                    <a href="{% url 'CadastroPessoa' pessoa.id %}">{{ pessoa.nome }}</a>
-                                </td>
-                                <td><a href="{% url 'CadastroPessoa' pessoa.id %}">{{pessoa.usuario}}</a></td>
-                            </tr>
+                        {%for form in formpessoa%}
+                            {% if 'checkbox' in form.as_widget %}
+                                {%for item in form%}
+                                    <tr>
+                                        <td id="td-vermelho">
+                                            <a href="{% url 'CadastroPessoa' 'item.id' %}">{{item }}</a>
+                                        </td>
+                                        <td><a href="{% url 'CadastroPessoa' 'item.id' %}">{{item.value}}</a></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
                         {%endfor%}
                     </tbody>
                 </table>
@@ -150,6 +152,36 @@
     <script>
         $(document).ready(function () {
             $('#minhaTabela').DataTable({
+                "bPaginate": true,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bAutoWidth": true,
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                    "sNext": "»",
+                    "sPrevious": "«",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                    }
+                },
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#minhaTabela1').DataTable({
                 "bPaginate": true,
                 "bLengthChange": false,
                 "bFilter": true,

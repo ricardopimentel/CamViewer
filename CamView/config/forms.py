@@ -119,3 +119,11 @@ class PessoaForm(forms.ModelForm):
         self.fields['email'].widget = forms.TextInput(attrs={'placeholder': 'E-mail', 'title': 'e-mail da pessoa'})
         self.fields['email'].label = ""
         self.fields['status'].label = "Ativo?"
+
+
+class VincularPessoasGrupoForm(forms.Form):
+    pessoaslist = Pessoa.objects.all()
+    CHOICES = [(-1,'')]
+    for pessoa in pessoaslist:
+        CHOICES.append((pessoa.id, str(pessoa.nome).title()))
+    pessoas = forms.MultipleChoiceField(choices=CHOICES, label="", required=True, widget=forms.CheckboxSelectMultiple())
