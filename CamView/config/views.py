@@ -216,7 +216,9 @@ def GerenciarGrupos(request, tipo, id):
     pessoas = False
     cameras = False
     formpessoa = False
+    grupo = False
     if tipo == 'pessoa':
+        grupo = Grupo.objects.get(id=id)
         pessoas = Pessoa.objects.all()
         formpessoa = VincularPessoasGrupoForm()
     elif tipo == 'camera':
@@ -230,6 +232,7 @@ def GerenciarGrupos(request, tipo, id):
             'pessoas': pessoas,
             'cameras': cameras,
             'formpessoa': formpessoa,
+            'grupo': grupo,
         })
     return redirect(r('Login'))
 

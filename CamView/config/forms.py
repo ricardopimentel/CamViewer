@@ -123,7 +123,7 @@ class PessoaForm(forms.ModelForm):
 
 class VincularPessoasGrupoForm(forms.Form):
     pessoaslist = Pessoa.objects.all()
-    CHOICES = [(-1,'')]
+    CHOICES = []
     for pessoa in pessoaslist:
         CHOICES.append((pessoa.id, str(pessoa.nome).title()))
     pessoas = forms.MultipleChoiceField(choices=CHOICES, label="", required=True, widget=forms.CheckboxSelectMultiple())

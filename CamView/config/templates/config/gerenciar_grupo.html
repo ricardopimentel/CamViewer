@@ -99,31 +99,34 @@
         <div class="cartao">
             <img src="{% static 'images/user.png' %}" alt="" height="70">
             <h1>Vincular Pessoas</h1>
-            <br>
+            <p>Vinculando pessoas ao grupo {{grupo.nome}}</p>
 
             <div class="card-progressao-container">
-                <table id="minhaTabela1">
-                    <thead>
-                        <tr id="tr-no-shadow">
-                            <th>Nome</th>
-                            <th>ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%for form in formpessoa%}
-                            {% if 'checkbox' in form.as_widget %}
-                                {%for item in form%}
-                                    <tr>
-                                        <td id="td-vermelho">
-                                            <a href="{% url 'CadastroPessoa' 'item.id' %}">{{item }}</a>
-                                        </td>
-                                        <td><a href="{% url 'CadastroPessoa' 'item.id' %}">{{item.value}}</a></td>
-                                    </tr>
-                                {% endfor %}
-                            {% endif %}
-                        {%endfor%}
-                    </tbody>
-                </table>
+                <form method="post" action="{% url 'CadastroGrupos' "id" %}"> {%csrf_token%}
+                    <table id="minhaTabela1">
+                        <thead>
+                            <tr id="tr-no-shadow">
+                                <th>Nome</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for form in formpessoa%}
+                                {% if 'checkbox' in form.as_widget %}
+                                    {%for item in form%}
+                                        <tr>
+                                            <td id="td-vermelho">
+                                                <a href="{% url 'CadastroPessoa' 'item.id' %}">{{item }}</a>
+                                            </td>
+                                            <td><a href="{% url 'CadastroPessoa' 'item.id' %}">{{item.value}}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                    <p><input type="submit" name="commit" value="Salvar" id="botao" ></p>
+                </form>
             </div>
         </div>
     {%endif%}
