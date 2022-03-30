@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, resolve_url as r, render_to_respo
 # Create your views here.
 from django.template import RequestContext
 
-from CamView.core.camera import VideoCamera, IPWebCam, MaskDetect, LiveWebCam
+from CamView.core.camera import VideoCamera, IPWebCam, MaskDetect, CamView
 from CamView.core.models import Camera, Pessoa
 
 def Home(request):
@@ -12,6 +12,16 @@ def Home(request):
         if request.session['nomesugestao']:
             idpessoa = Pessoa.objects.get(usuario=request.session['userl'])
             return render(request, 'index.html', {'err': '', 'itemselec': 'HOME',})
+
+    except KeyError:
+        return redirect(r('Login'))
+
+
+def Visualizacao(request):
+    try:# Verificar se usuario esta logado
+        if request.session['nomesugestao']:
+            idpessoa = Pessoa.objects.get(usuario=request.session['userl'])
+            return render(request, 'visualizacao.html', {'err': '', 'itemselec': 'HOME',})
 
     except KeyError:
         return redirect(r('Login'))
@@ -43,6 +53,7 @@ def mask_feed(request):
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
 
-def livecam_feed(request):
-    return StreamingHttpResponse(gen(LiveWebCam()),
+def VisualizarCamera(request, id):
+    camera = Camera.objects.get(id=id)
+    return StreamingHttpResponse(gen(CamView(camera.usuario, camera.senha, camera.ip)),
                                  content_type='multipart/x-mixed-replace; boundary=frame')

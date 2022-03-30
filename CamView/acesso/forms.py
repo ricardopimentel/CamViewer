@@ -20,26 +20,29 @@ class LoginForm(forms.Form):
             c = conexaoAD(usuario, senha)
             result = c.Login() #tenta login no ldap
 
-            if(result == ('i')): # Credenciais invalidas
-                # Adiciona erro na validação do formulário
-                raise forms.ValidationError("Usuário ou senha incorretos", code='invalid')
-            elif(result == ('n')): # Server Down
-                # Adiciona erro na validação do formulário
-                raise forms.ValidationError("Servidor AD não encontrado", code='invalid')
-            elif(result == ('o')): # Usuario fora do escopo permitido
-                # Adiciona erro na validação do formulário
-                raise forms.ValidationError("Usuário não tem permissão para acessar essa página", code='invalid')
-            else:# se logou
-                # Retirar virgulas do member of
-                result['memberOf'] = str(result['memberOf']).replace(',', '')
-                # Remover cabeçalhos desnecessarios 
-                ret = repr(result)
-                
-                # Transformar em dicionario
-                ret = ret.replace('[', '')
-                ret = ret.replace(']', '')
+            if result:
+                if(result == ('i')): # Credenciais invalidas
+                    # Adiciona erro na validação do formulário
+                    raise forms.ValidationError("Usuário ou senha incorretos", code='invalid')
+                elif(result == ('n')): # Server Down
+                    # Adiciona erro na validação do formulário
+                    raise forms.ValidationError("Servidor AD não encontrado", code='invalid')
+                elif(result == ('o')): # Usuario fora do escopo permitido
+                    # Adiciona erro na validação do formulário
+                    raise forms.ValidationError("Usuário não tem permissão para acessar essa página", code='invalid')
+                else:# se logou
+                    # Retirar virgulas do member of
+                    result['memberOf'] = str(result['memberOf']).replace(',', '')
+                    # Remover cabeçalhos desnecessarios
+                    ret = repr(result)
 
-                MontarMenu(self.request, ret, usuario)
+                    # Transformar em dicionario
+                    ret = ret.replace('[', '')
+                    ret = ret.replace(']', '')
+
+                    MontarMenu(self.request, ret, usuario)
+            else:
+                raise forms.ValidationError("Erro desconhecido", code='invalid')
         # Sempre retorne a coleção completa de dados válidos.
         return cleaned_data
 

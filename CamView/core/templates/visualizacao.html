@@ -1,0 +1,138 @@
+<meta charset="UTF-8"/>
+{% extends "base.html" %}
+{% load sugestao_extras %}
+{% load staticfiles %}
+{% load pagination_tags %}
+{%block titulo%}{{title}}{%endblock%}
+
+{%block top%}
+	{% if request.session.nomesugestao%}
+			<h1>{{request.session.nomesugestao}}</h1>
+			<a href="{% url 'Logout' %}"><h2>Sair</h2></a>
+		{%endif%}
+{%endblock%}
+
+{%block menu%}
+	{% if request.session.menu%}
+		{%for item in request.session.menu%}
+			{% if item == itemselec %}
+				<li>
+					<a href="/{{ request.session.url|get_at_index:forloop.counter0 }}">
+						<div class="item-menu-selec">
+							<img src="{% static 'images/'%}{{request.session.img|get_at_index:forloop.counter0}}"  alt="" />
+							<p>{{item}}</p>
+						</div>
+					</a>
+				</li>
+			{%else%}
+				<li>
+                    {% if item == 'logo' %}
+                        <div id="hidemenu">
+                            <img src="{% static 'images/'%}{{request.session.img|get_at_index:forloop.counter0}}"  alt="" />
+                        </div>
+                    {% elif item == 'sair' %}
+                        <div id="hidemenusair">
+                            <div class="background-nome">
+                                {% if request.session.nomesugestao %}
+                                    <h1>{{request.session.nomesugestao}}</h1>
+                                    <a href="{% url 'Logout' %}"><h2>Sair</h2></a>
+                                {%else%}
+                                    <h1>Faça Login</h1>
+                                {%endif%}
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="/{{ request.session.url|get_at_index:forloop.counter0 }}">
+                            <div class="item-menu">
+                                <img src="{% static 'images/'%}{{request.session.img|get_at_index:forloop.counter0}}"  alt="" />
+                                <p>{{item}}</p>
+                            </div>
+                        </a>
+                    {% endif %}
+				</li>
+			{%endif%}
+		{%endfor%}
+	{%endif%}
+{%endblock%}
+
+{%block conteudo%}
+	{% if not request.session.userl %}
+		<meta http-equiv="refresh" content="0; url=/login/">
+	{%else%}
+		<div class="cartao">
+			<img src="{% static 'images/relatorio.png' %}" alt="" width="70"/>
+			<h1>Visualização de Câmeras</h1>
+			<br>
+			<div class="navegation_bar">
+				<a href="{% url 'Home' %}">Home</a>
+				<a id="navegation_bar_selected" href="{% url 'Administracao' %}">Administração</a>
+			</div>
+
+			<div class="box-file">
+				<div class="box_folder">
+					<a href="{% url 'ConfigAD' %}" title="Abrir Configuração do Active Directory">
+						<div class="folder">
+							<br><img src="{% static 'images/shared-folder.png' %}" alt="" />
+						</div>
+						<p>Conf. Active Directory</p>
+					</a>
+				</div>
+				<div class="box_folder">
+					<a href="{% url 'GerenciarCameras' %}" title="Abrir Cadastro de Cameras">
+						<div class="folder">
+							<br><img src="{% static 'images/email-config-icon.png' %}" alt="" />
+						</div>
+						<p>Gerenciar Câmeras</p>
+					</a>
+				</div>
+                <div class="box_folder">
+					<a href="{% url 'GerenciarGrupos' 'vazio' 'vazio' %}" title="Abrir Cadastro de Grupos">
+						<div class="folder">
+							<br><img src="{% static 'images/empresa.png' %}" alt="" />
+						</div>
+						<p>Gerenciar Grupos</p>
+					</a>
+				</div>
+				<div class="box_folder">
+					<a href="{% url 'GerenciarPessoas' %}" title="Abrir Gerenciamento de Pessoas">
+						<div class="folder">
+							<br><img src="{% static 'images/user.png' %}" alt="" />
+						</div>
+						<p>Gerenciar Pessoas</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	{%endif%}
+
+    <script>
+        function mostrarocultar(mostrar, ocultar){
+            $("#"+mostrar).show(500);
+            document.getElementById(ocultar).style.display = "none";
+        }
+        function ocultarmostrar(mostrar, ocultar){
+            $("#"+ocultar).hide(500);
+            $("#"+mostrar).show(500);
+        }
+        function  mostrar(ID){
+            document.getElementById(ID).style.display = "block";
+
+        }
+        function  ocultar(ID){
+            document.getElementById(ID).style.display = "none";
+            $("#"+ID).hide("slow");
+        }
+    </script>
+
+    {% if messages %}
+        <div class="msg-popup-container">
+            {% for message in messages %}
+                <div id="{{ forloop.counter0 }}" class="msg-popup {{ message.tags }}">
+                    <img src="{% static 'images/'%}{{ message.tags }}.png" alt="" width="70" height="70"/>
+                    <p>{{ message }}</p>
+                    <a onclick="ocultar('{{ forloop.counter0 }}')">x</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{%endblock%}

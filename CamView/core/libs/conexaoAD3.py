@@ -53,6 +53,8 @@ class conexaoAD(object):
             elif 'LDAPSocketOpenError' in str(sys.exc_info()):
                 print(sys.exc_info())
                 return 'n'  # Servidor não encontrado
+            else:
+                print(sys.exc_info())
 
 
     def ListaAlunos(self):
@@ -126,7 +128,7 @@ class conexaoAD(object):
             elif 'LDAPSocketOpenError' in str(sys.exc_info()):
                 print(sys.exc_info())
                 return 'n'  # Servidor não encotrado
-    
+
     #def TestarCredenciais(self): # desconsiderar metodo, apenas testes
         #try:
             # build a client
