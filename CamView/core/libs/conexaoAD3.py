@@ -15,6 +15,13 @@ class conexaoAD(object):
             self.dominio = config.dominio
             self.endservidor = config.endservidor
             self.filter = config.filter
+            print('usuario: '+ username)
+            print(' senha: ' + password)
+            print(' base: ' + config.ou)
+            print(' dominio: ' + config.dominio)
+            print(' filtro: ' + config.filter)
+            print(' user: '+ 'ldap://%s' % self.endservidor)
+            print(' pass: ' + self.username + '@' + self.dominio)
         except:
             self.username = username
             self.password = password

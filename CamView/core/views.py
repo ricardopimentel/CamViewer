@@ -1,10 +1,7 @@
 from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import render, redirect, resolve_url as r, render_to_response
 
-# Create your views here.
-from django.template import RequestContext
-
-from CamView.core.camera import VideoCamera, IPWebCam, MaskDetect, CamView
+from CamView.core.camera import CamView
 from CamView.core.models import Camera, Pessoa
 
 def Home(request):
@@ -36,21 +33,6 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-
-def video_feed(request):
-    return StreamingHttpResponse(gen(VideoCamera()),
-                                 content_type='multipart/x-mixed-replace; boundary=frame')
-
-
-def webcam_feed(request):
-    return StreamingHttpResponse(gen(IPWebCam()),
-                                 content_type='multipart/x-mixed-replace; boundary=frame')
-
-
-def mask_feed(request):
-    return StreamingHttpResponse(gen(MaskDetect()),
-                                 content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 def VisualizarCamera(request, id):
