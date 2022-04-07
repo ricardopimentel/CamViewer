@@ -61,45 +61,43 @@
 	{%else%}
 		<div class="cartao">
 			<img src="{% static 'images/relatorio.png' %}" alt="" width="70"/>
-			<h1>Visualização de Câmeras</h1>
+			<h1>Visualização de Câmeras do Grupo: {{cameras.0.id_grupo.nome}}</h1>
 			<br>
 			<div class="navegation_bar">
 				<a href="{% url 'Home' %}">Home</a>
-				<a id="navegation_bar_selected" href="{% url 'Administracao' %}">Administração</a>
-			</div>
+				<a href="{% url 'Visualizar' 'vazio' %}">Visualização</a>
+				{%if cameras%}
+					<a id="navegation_bar_selected" href="{% url 'Visualizar' cameras.0.id_grupo.id %}">{{cameras.0.id_grupo.nome}}</a>
+				{%endif%}
 
-			<div class="box-file">
-				<div class="box_folder">
-					<a href="{% url 'ConfigAD' %}" title="Abrir Configuração do Active Directory">
-						<div class="folder">
-							<br><img src="{% static 'images/shared-folder.png' %}" alt="" />
-						</div>
-						<p>Conf. Active Directory</p>
-					</a>
-				</div>
-				<div class="box_folder">
-					<a href="{% url 'GerenciarCameras' %}" title="Abrir Cadastro de Cameras">
-						<div class="folder">
-							<br><img src="{% static 'images/email-config-icon.png' %}" alt="" />
-						</div>
-						<p>Gerenciar Câmeras</p>
-					</a>
-				</div>
-                <div class="box_folder">
-					<a href="{% url 'GerenciarGrupos' 'vazio' 'vazio' %}" title="Abrir Cadastro de Grupos">
-						<div class="folder">
-							<br><img src="{% static 'images/empresa.png' %}" alt="" />
-						</div>
-						<p>Gerenciar Grupos</p>
-					</a>
-				</div>
-				<div class="box_folder">
-					<a href="{% url 'GerenciarPessoas' %}" title="Abrir Gerenciamento de Pessoas">
-						<div class="folder">
-							<br><img src="{% static 'images/user.png' %}" alt="" />
-						</div>
-						<p>Gerenciar Pessoas</p>
-					</a>
+			</div>
+			<div class="container-conteudo-cartao">
+            	<div class="box-file">
+					{% if grupos %}
+						{% autopaginate grupos 12 %}
+							{% for grupo in grupos %}
+								<div class="box_folder">
+									<a href="{% url 'Visualizar' grupo.id %}" title="">
+										<div class="folder">
+											<br><img src="{% static 'images/folder2.png' %}" alt="" />
+										</div>
+									</a>
+									<p>{{grupo.nome}}</p>
+								</div>
+							{%endfor%}
+						{% paginate %}
+					{% endif %}
+
+					{% for camera in cameras %}
+						<a href="" title="">
+							<div class="sugestao-box">
+								<div class="sugestao-box_bar_top">
+									<img src="{% url 'VisualizarCamera' camera.id_camera.id %}">
+								</div>
+								<p><b>Câmera: {{camera.id_camera.nome}}</b></p>
+							</div>
+						</a>
+					{% endfor %}
 				</div>
 			</div>
 		</div>

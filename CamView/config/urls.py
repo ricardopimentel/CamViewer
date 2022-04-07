@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^gerenciarpessoas/$', views.GerenciarPessoas, name='GerenciarPessoas'),
     url(r'^gerenciarcameras/$', views.GerenciarCameras, name='GerenciarCameras'),
     url(r'^gerenciargrupos/(?P<tipo>.+)/(?P<id>.+)$', views.GerenciarGrupos, name='GerenciarGrupos'),
-    url(r'^visualizar/$', views.Visualizar, name='Visualizar'),
     url(r'^cadastropessoa/(?P<id>.+)$', views.CadastroPessoa, name='CadastroPessoa'),
     url(r'^cadastrocameras/(?P<id>.+)$', views.CadastroCameras, name='CadastroCameras'),
     url(r'^cadastrogrupos/(?P<id>.+)$', views.CadastroGrupos, name='CadastroGrupos'),

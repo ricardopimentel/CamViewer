@@ -2,13 +2,6 @@ from imutils.video import VideoStream
 import cv2
 
 
-class MaskDetect(object):
-    def __init__(self):
-        self.vs = VideoStream(src=0).start()
-
-    def __del__(self):
-        cv2.destroyAllWindows()
-
 class CamView(object):
 
     def __init__(self, usuario, senha, ip):

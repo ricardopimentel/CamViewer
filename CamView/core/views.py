@@ -2,7 +2,8 @@ from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import render, redirect, resolve_url as r, render_to_response
 
 from CamView.core.camera import CamView
-from CamView.core.models import Camera, Pessoa
+from CamView.core.models import Camera, Pessoa, Camera_Grupo, Grupo
+
 
 def Home(request):
     try:# Verificar se usuario esta logado
@@ -14,18 +15,18 @@ def Home(request):
         return redirect(r('Login'))
 
 
-def Visualizacao(request):
+def Visualizacao(request, id):
     try:# Verificar se usuario esta logado
         if request.session['nomesugestao']:
-            idpessoa = Pessoa.objects.get(usuario=request.session['userl'])
-            return render(request, 'visualizacao.html', {'err': '', 'itemselec': 'HOME',})
+            if id == 'vazio':
+                grupos = Grupo.objects.all()
+                return render(request, 'visualizacao.html', {'err': '', 'itemselec': 'VISUALIZAR', 'titulo': 'Selecione um grupo', 'grupos': grupos})
+            else:
+                camerasgrupos = Camera_Grupo.objects.filter(id_grupo=id)
+                return render(request, 'visualizacao.html', {'err': '', 'itemselec': 'VISUALIZAR', 'titulo': 'Visualização de Câmeras', 'cameras': camerasgrupos})
 
     except KeyError:
         return redirect(r('Login'))
-
-
-def index(request):
-    return render(request, 'streamapp/home.html')
 
 
 def gen(camera):

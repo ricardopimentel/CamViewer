@@ -66,12 +66,12 @@
 
         <div class="navegation_bar">
             <a href="{% url 'Home' %}">Home</a>
-            <a id="navegation_bar_selected" href="{% url 'Visualizar' %}">Sugestões</a>
+            <a id="navegation_bar_selected" href="{% url 'Visualizar' 'vazio'%}">Sugestões</a>
         </div>
 
         <div class="action_bar">
-            <form method="post" action="{% url 'Visualizar' %}"> {%csrf_token%}
-                <p><a href="{% url 'Visualizar' %}" title="Fazer uma sugestão"><img src="{% static 'images/add24b.png' %}"></a><input required type="hidden" id="key" name="key" placeholder="Chave de acesso" value="*"><input required type="text" id="id" name="id" placeholder="Número da Sugestão"><input type="submit" name="commit" value="" id="actionbarbuttom"></p>
+            <form method="post" action="{% url 'Visualizar' 'vazio' %}"> {%csrf_token%}
+                <p><a href="{% url 'Visualizar' 'vazio' %}" title="Fazer uma sugestão"><img src="{% static 'images/add24b.png' %}"></a><input required type="hidden" id="key" name="key" placeholder="Chave de acesso" value="*"><input required type="text" id="id" name="id" placeholder="Número da Sugestão"><input type="submit" name="commit" value="" id="actionbarbuttom"></p>
             </form>
         </div>
 
@@ -95,11 +95,10 @@
                     {% paginate %}
                     <br><hr>
                 {%else%}
-                    <img src="{% url 'VisualizarCamera' 1 %}">
                     <p>Você não fez nenhuma sugestão 😥</p>
                     <hr>
                     <br>
-                    <p><a id="botao" href="{% url 'Visualizar' %}">Fazer uma sugestão</a></p>
+                    <p><a id="botao" href="{% url 'Visualizar' 'vazio' %}">Fazer uma sugestão</a></p>
                 {%endif%}
                 <!-- Melhor não ;)
                 <br><br><br><br>
@@ -126,7 +125,7 @@
                     <p>Não temos sugestões para você 😅</p>
                     <hr>
                 {%endif%}
-                <a href="{% url 'Visualizar' %}">Fazer uma sugestão</a>
+                <a href="{% url 'Visualizar' 'vazio' %}">Fazer uma sugestão</a>
                 -->
             </div>
         </div>

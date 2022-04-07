@@ -201,7 +201,7 @@ def CadastroGrupos(request, id):
                 else:
                     form.save()
                 messages.success(request, "Sucesso!")
-                return redirect(r('GerenciarGrupos'))
+                return redirect(r('GerenciarGrupos', 'vazio', 'vazio'))
         return render(request, 'config/admin_cadastro_grupo.html', {
             'title': 'Administração',
             'itemselec': 'ADMINISTRAÇÃO',

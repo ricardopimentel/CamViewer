@@ -845,7 +845,6 @@ input#control-nav {
 	text-align: center;
 	display: inline-block;
 	width: 100%;
-	max-width: 909px;
 }
 
 .box-file a:HOVER{
@@ -866,15 +865,15 @@ input#control-nav {
 
 .sugestao-box{
 	background: #ffffff;
-	width: 200px;
-	height: 200px;
+	width: 400px;
+	height: 350px;
 	box-shadow: 1px 1px 3px #888;
 	padding: 0px;
 	margin: 5px;
 	display: inline-block;
 	position: relative;
 	text-align: left;
-	border-radius: 5px 5px 0px 0px;
+	border-radius: 15px 15px 0px 0px;
 }
 
 .sugestao-box img{
@@ -905,18 +904,19 @@ input#control-nav {
 /* Tipos de Arquivos*/
 
 .sugestao-box_bar_top{
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 15px 15px 0px 0px;
 	margin: 0px;
 	background: #E53935;
 	background: #4a5255;
-	width: 200px;
-	height: 70px;
+	background: url('../images/loading1.gif') no-repeat scroll 0 0 #4a5255;
+	width: 400px;
+	height: 300px;
 }
 
 .sugestao-box_bar_top img{
 	width: 100%;
-	height: 70px;
-	border-radius: 5px 5px 0px 0px;
+	height: 300px;
+	border-radius: 15px 15px 0px 0px;
 	margin: 0px;
 	padding: 0px;
 	border-bottom: 1px solid #e0e0e0;
@@ -2625,6 +2625,19 @@ a.icon:hover:before {
 
 .botao-circulo img{
     margin: 20px;
+}
+
+.container-conteudo-cartao{
+    max-width: 100%;
+}
+
+#loadng-central{
+    width: 32px;
+    height: 32px;
+    top: 24px;
+    border-radius: 0%;
+    margin: auto;
+    border-radius:100%;
 }
 
 @media screen and (max-width: 767px) {
