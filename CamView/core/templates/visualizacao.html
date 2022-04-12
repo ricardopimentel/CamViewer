@@ -88,18 +88,23 @@
 						{% paginate %}
 					{% endif %}
 
-					{% for camera in cameras %}
-						<a href="{% url 'VisualizarUma' camera.id_camera.id %}" title="Visualizar essa câmera">
-							<div class="sugestao-box">
-								<div class="sugestao-box_bar_top">
-									<img src="{% url 'VisualizarCamera' camera.id_camera.id %}">
-								</div>
-								<p><b>Câmera: {{camera.id_camera.nome}}</b></p>
-							</div>
-						</a>
-					{% endfor %}
+					{% if cameras %}
+						{% autopaginate cameras 3 %}
+							{% for camera in cameras %}
+								<a href="{% url 'VisualizarUma' camera.id_camera.id %}" title="Visualizar essa câmera">
+									<div class="sugestao-box">
+										<div class="sugestao-box_bar_top">
+											<img src="{% url 'VisualizarCamera' camera.id_camera.id %}">
+										</div>
+										<p><b>Câmera: {{camera.id_camera.nome}}</b></p>
+									</div>
+								</a>
+							{% endfor %}
+						{% paginate %}
+					{% endif %}
 				</div>
 			</div>
+			<br>
 		</div>
 	{%endif%}
 
