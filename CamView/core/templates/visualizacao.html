@@ -89,7 +89,7 @@
 					{% endif %}
 
 					{% for camera in cameras %}
-						<a href="" title="">
+						<a href="{% url 'VisualizarUma' camera.id_camera.id %}" title="Visualizar essa câmera">
 							<div class="sugestao-box">
 								<div class="sugestao-box_bar_top">
 									<img src="{% url 'VisualizarCamera' camera.id_camera.id %}">

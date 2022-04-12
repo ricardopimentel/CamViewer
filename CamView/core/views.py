@@ -29,6 +29,16 @@ def Visualizacao(request, id):
         return redirect(r('Login'))
 
 
+def VisualizarUma(request, id):
+    try:# Verificar se usuario esta logado
+        if request.session['nomesugestao']:
+            camera = Camera.objects.get(id=id)
+            return render(request, 'visualizar1.html', {'err': '', 'itemselec': 'VISUALIZAR', 'titulo': 'Selecione um grupo', 'camera': camera})
+
+    except KeyError:
+        return redirect(r('Login'))
+
+
 def gen(camera):
     while True:
         frame = camera.get_frame()

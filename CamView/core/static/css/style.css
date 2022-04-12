@@ -908,7 +908,7 @@ input#control-nav {
 	margin: 0px;
 	background: #E53935;
 	background: #4a5255;
-	background: url('../images/loading1.gif') no-repeat scroll 0 0 #4a5255;
+	background: url('../images/interferenciatv.gif') no-repeat scroll 0 0 #4a5255;
 	width: 400px;
 	height: 300px;
 }
@@ -2563,8 +2563,8 @@ a.icon:hover:before {
 }
 
 .visualizador-imagem{
-    width: 60px;
-    height: 60px;
+    width: 100%;
+    height: 500px;
     background: transparent;
     display: flex;
     flex-direction: row;
@@ -2572,7 +2572,6 @@ a.icon:hover:before {
     justify-content: center;
     cursor: pointer;
     background: var(--primary-dark);
-    margin: 5px;
 }
 
 .visualizador-imagem img{
@@ -2580,6 +2579,7 @@ a.icon:hover:before {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
+    border-radius: 30px;
     margin: 5px;
 }
 
