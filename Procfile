@@ -1,1 +1,1 @@
-web: gunicorn Sugestao.wsgi --log-file -
+web: gunicorn CamView.wsgi --log-file -
